@@ -1,0 +1,4 @@
+uid,name,phone,region_id,area_id,distributor_id,territory_id,points,routes,notes
+R0001,ABC Store,+8801711111111,1,1,1,1,100,Route A,Sample retailer 1
+R0002,XYZ Mart,+8801722222222,1,1,1,1,150,Route B,Sample retailer 2
+R0003,Super Shop,+8801733333333,1,2,2,2,200,Route C,Sample retailer 3

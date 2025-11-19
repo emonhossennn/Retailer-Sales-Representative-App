@@ -1,0 +1,402 @@
+{
+  "info": {
+    "name": "Retailer Sales Backend API",
+    "description": "API collection for Retailer Sales Representative Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('access_token', response.access_token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Retailers (Sales Rep)",
+      "item": [
+        {
+          "name": "Get Assigned Retailers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/retailers?page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["retailers"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "regionId",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Retailer Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/retailers/1",
+              "host": ["{{base_url}}"],
+              "path": ["retailers", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Retailer",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"points\": 150,\n  \"routes\": \"Route A, Route B\",\n  \"notes\": \"Updated notes\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/retailers/1",
+              "host": ["{{base_url}}"],
+              "path": ["retailers", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin - Master Data",
+      "item": [
+        {
+          "name": "Regions",
+          "item": [
+            {
+              "name": "Get All Regions",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/regions",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "regions"]
+                }
+              }
+            },
+            {
+              "name": "Create Region",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sylhet\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/regions",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "regions"]
+                }
+              }
+            },
+            {
+              "name": "Update Region",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Sylhet Updated\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/regions/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "regions", "1"]
+                }
+              }
+            },
+            {
+              "name": "Delete Region",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/regions/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "regions", "1"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Areas",
+          "item": [
+            {
+              "name": "Get All Areas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/areas",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "areas"]
+                }
+              }
+            },
+            {
+              "name": "Create Area",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Mirpur\",\n  \"regionId\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/areas",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "areas"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Distributors",
+          "item": [
+            {
+              "name": "Get All Distributors",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/distributors",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "distributors"]
+                }
+              }
+            },
+            {
+              "name": "Create Distributor",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Distributor C\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/distributors",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "distributors"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Territories",
+          "item": [
+            {
+              "name": "Get All Territories",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/territories",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "territories"]
+                }
+              }
+            },
+            {
+              "name": "Create Territory",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Territory 3\",\n  \"areaId\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/admin/master-data/territories",
+                  "host": ["{{base_url}}"],
+                  "path": ["admin", "master-data", "territories"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin - Retailer Management",
+      "item": [
+        {
+          "name": "Assign Retailers to SR",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salesRepId\": 2,\n  \"retailerIds\": [1, 2, 3]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/retailer-management/assign",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "retailer-management", "assign"]
+            }
+          }
+        },
+        {
+          "name": "Unassign Retailers from SR",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salesRepId\": 2,\n  \"retailerIds\": [1, 2]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/retailer-management/unassign",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "retailer-management", "unassign"]
+            }
+          }
+        },
+        {
+          "name": "Import Retailers from CSV",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "prisma/sample-retailers.csv"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/admin/retailer-management/import-csv",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "retailer-management", "import-csv"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
