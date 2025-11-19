@@ -3,3 +3,7 @@ node_modules
 .env
 
 /generated/prisma
+
+# Interview preparation files (keep locally, don't push to GitHub)
+DJANGO_TO_NESTJS_GUIDE.md
+INTERVIEW_QA.md
